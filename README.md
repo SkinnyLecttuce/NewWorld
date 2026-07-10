@@ -14,13 +14,15 @@ A full-stack collaborative movie discovery and watch-planning platform with live
 ## 🛠️ Tech Stack
 ### **Frontend**
 - React
-- TypeScript
 - Vite
-- TailwindCSS
+- JavaScript/TypeScript
+- TailwindCSS/CSS3
 - GSAP
 
 ### Backend
-- Node.js + Express + Socket.io
+- Node.js
+- Express.js
+- Socket.IO
 - FastAPI
 
 ### Database
