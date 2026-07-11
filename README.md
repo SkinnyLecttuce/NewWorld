@@ -79,16 +79,16 @@ movie-night-app/
 
 ```
 ┌──────────────────┐      ┌────────────────────┐
-│                   │─────▶│  realtime-service   │  (Node/Express/Socket.io)
-│  React Frontend   │      │  sessions, voting    │
-│                   │◀─────│                     │
-│                   │      └────────────────────┘
-│                   │
-│                   │      ┌────────────────────┐
-│                   │─────▶│   data-service       │  (FastAPI)
-│                   │      │  movies, set-builder, │
-│                   │◀─────│  saved sets, TMDB     │
-└──────────────────┘      └────────────────────┘
+│                  │─────▶│ realtime-service  │  (Node/Express/Socket.io)
+│  React Frontend  │      │ sessions, voting   │
+│                  │◀─────│                   │
+│                  │      └────────────────────┘
+│                  │
+│                  │      ┌──────────────────────┐
+│                  │─────▶│   data-service       │  (FastAPI)
+│                  │      │  movies, set-builder,│
+│                  │◀─────│  saved sets, TMDB    │
+└──────────────────┘      └──────────────────────┘
 ```
 
 ## Team
