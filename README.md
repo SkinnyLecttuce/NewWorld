@@ -1,38 +1,23 @@
-# 🎬 NewWorld
-A full-stack collaborative movie discovery and watch-planning platform with live sessions, realtime voting runtime-aware filtering, and shared movie sets.
-<br>
+# Movie Night Picker
 
-## Features
-- Movie filtering and sorting
-- Runtime-aware movie set builder
-- Saved movie sets
-- Live voting and ratings
-- Collaborative watch planning
-- **TMDB API** integration
-<br>
+A group decision-making app that ends the eternal "what should we watch tonight" debate, combining real-time group voting with a smart set-builder that fits your picks into the time you actually have.
 
-## 🛠️ Tech Stack
-### **Frontend**
-- React
-- Vite
-- JavaScript/TypeScript
-- TailwindCSS/CSS3
-- GSAP
+## The Problem
 
-### Backend
-- Node.js
-- Express.js
-- Socket.IO
-- FastAPI
+Picking movies as a group usually means endless scrolling, decision fatigue, and a plan that blows way past everyone's bedtime. Movie Night Picker fixes both halves of that: it helps the group actually agree on something, and it makes sure whatever gets picked fits the time available.
 
-### Database
-- [Undecided]
-<br>
+## How It Works
 
-## 📁 Repository Structure
+- **Vote together, live.** Start or join a session and vote on movies in real time with the group.
+- **Build a set, not just a pick.** The set-builder tracks each movie's duration and remaining "slack" in the session, greying out selections that would blow the time budget as you build your lineup.
+- **Swipe-based onboarding.** Swipe through movies early on to help the app learn your taste (taste-based recommendations planned).
+- **Save and reuse.** Save sets you've built for future movie nights.
+
+## Repository Structure
+
 ```
 movie-night-app/
-├── frontend/                 # React + TypeScript + Tailwind
+├── frontend/                 # React + TypeScript + Tailwind - Yasitha
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── MovieCard/
@@ -46,7 +31,7 @@ movie-night-app/
 │   │   └── styles/
 │   └── package.json
 │
-├── realtime-service/         # Node + Express + Socket.io — jani
+├── realtime-service/         # Node + Express + Socket.io — Janitha
 │   ├── src/
 │   │   ├── sockets/            # vote events, session events
 │   │   ├── routes/
@@ -54,9 +39,9 @@ movie-night-app/
 │   │   └── controllers/
 │   └── package.json
 │
-├── data-service/              # Python + FastAPI — reh
+├── data-service/              # Python + FastAPI — Rehan
 │   ├── app/
-│   │   ├── core/                 # ← reh's actual commit lives here
+│   │   ├── core/                 # SetBuilder logic
 │   │   │   ├── Node.py             # movie node: duration, slack, active, selected
 │   │   │   ├── MergeSort.py        # sorts nodes by index
 │   │   │   └── SetBuilder.py       # runtime-constraint logic (select/deselect, active flags)
@@ -72,14 +57,60 @@ movie-night-app/
 │   └── requirements.txt
 │
 ├── shared/
-│   └── contracts.md            # Lamar owns — includes SetBuilder's select/deselect contract
+│   └── contracts.md            # API contracts between services — Senal
 │
 └── docs/
     └── figma-exports/
 ```
 
-## 💻 Getting Started
-<br>
+## Tech Stack
 
-## 📜 License
-Source code is licensed under [**MIT License**](https://opensource.org/license/mit).
+**Frontend**
+- React + TypeScript + Tailwind
+
+**Backend — dual-service architecture**
+- `realtime-service` — Node.js, Express, Socket.io — handles live session and voting events
+- `data-service` — Python, FastAPI — handles movie data (TMDB integration), the set-builder/greyout logic, saved sets, and swipe onboarding
+
+**Integration**
+- Shared API contracts (`shared/contracts.md`) define how the frontend and both backend services talk to each other, including the set-builder's select/deselect contract
+
+## Architecture
+
+```
+┌──────────────────┐      ┌────────────────────┐
+│                  │─────▶│ realtime-service  │  (Node/Express/Socket.io)
+│  React Frontend  │      │ sessions, voting   │
+│                  │◀─────│                   │
+│                  │      └────────────────────┘
+│                  │
+│                  │      ┌──────────────────────┐
+│                  │─────▶│   data-service       │  (FastAPI)
+│                  │      │  movies, set-builder,│
+│                  │◀─────│  saved sets, TMDB    │
+└──────────────────┘      └──────────────────────┘
+```
+
+## Team
+
+- **Senal** — API contract design, cross-service integration, future mobile port
+- **Rehan** — `data-service` core (SetBuilder, Node, MergeSort)
+- **Janitha** — `realtime-service` (sockets, session/vote events)
+- **Yasitha** - Frontend + designing
+
+## Roadmap
+
+- [ ] Core voting + session flow
+- [ ] Set-builder / greyout timeline
+- [ ] Swipe-based onboarding
+- [ ] Saved sets
+- [ ] Taste learning
+- [ ] Native mobile port
+
+## Getting Started
+
+> Setup instructions coming soon — will be added once each service's entry point is finalized.
+
+## License
+
+TBD
