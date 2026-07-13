@@ -1,4 +1,7 @@
-import Node
+'''
+Core module
+Blueprint for setbuilder
+'''
 
 class SetBuilder(object):
     '''
@@ -16,7 +19,7 @@ class SetBuilder(object):
 
         slack is duration remaining
     '''
-    def __init__(self, hours:int, nobj:list, sorted_:bool, selected=None):
+    def __init__(self, minutes:int, nobj:list, sorted_:bool, selected=None): # nobj is a list of Node objects sorted or not
         if len(nobj)==0:
             raise ValueError("nobj cant be empty!")
 
@@ -26,37 +29,46 @@ class SetBuilder(object):
         self.slack=0
 
         if not sorted_:
-            import MergeSort 
-            self.nobj = MergeSort.merge_sort(self.nobj)
+            pass
+            '''
+            from apps.core import MergeSort 
+            self.nobj = MergeSort.merge_sort(self.nobj,"index")
+            '''
 
         for e in self.selected:
             self.slack+=e.duration
 
-        if self.slack>hours:
-            raise ValueError("slack must be less than hours")
+        if self.slack>minutes:
+            raise ValueError("slack must be less than minutes")
 
-        self.slack=hours-self.slack
+        self.slack=minutes-self.slack
 
         for e in self.nobj:
             if not e.selected:
                 self.not_selected.append(e)
-        
-    def select(self, nx):
+
+    def select(self, nx):# nx is a Node object present in nobj
+         if(nx.duration > self.slack): # select only if duration less than slack
+             return False
+
          self.selected.append(nx)
+
          nx.selected = True
+         nx.active = False
 
          if nx in self.not_selected:
              self.not_selected.remove(nx)
-             self.slack -= nx.duration if nx.duration else 0 #check for none
+             self.slack -= nx.duration if nx.duration else 0 # check for none
             
          for node in self.not_selected:
-             node_duration = node.duration if node.duration else 0 #check for none
+             node_duration = node.duration if node.duration else 0 # check for none
              if self.slack >= node_duration:
                  node.active = True
              else:
                  node.active=False
+         return True
 
-    def deselect(self,r_index):
+    def deselect(self,r_index):# r_index is relative index of the selected Node object in the selected list
         try:
             self.selected[r_index].selected=False
             self.selected[r_index].active=False
@@ -66,13 +78,33 @@ class SetBuilder(object):
             self.selected.pop(r_index)
 
             for node in self.not_selected:
-                node_duration = node.duration if node.duration else 0 #check for none
+                node_duration = node.duration if node.duration else 0 # check for none
                 if self.slack >= node_duration:
                     node.active = True
                 else:
                     node.active=False
-                     
+            return True
+
         except IndexError:
-            pass
+            return False
         
-            
+'''
+# Setbuilder usage example
+
+# set builder running on the collection of nodes
+setz = SetBuilder.SetBuilder(1, nodes, False)
+
+# select
+print("selected:")
+setz.select(setz.nobj[1])
+
+for n in setz.nobj: # output
+    print(n.out(fancify=True))
+
+# deselect
+setz.deselect(0)
+
+for n in setz.nobj: # output
+    print(n.out(fancify=True))        
+
+'''
