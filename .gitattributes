@@ -1,0 +1,26 @@
+# Auto-detect text files and normalize line endings to LF in the repo
+* text=auto
+
+# JavaScript / Node
+package.json text eol=lf
+package-lock.json text eol=lf
+
+# Python
+
+# Config / docs
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+.env.example text eol=lf
+
+# Shell scripts must stay LF or they break on Linux/CI runners
+*.sh text eol=lf
+
+# Binary files - never touch these
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
