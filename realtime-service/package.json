@@ -2,7 +2,7 @@
   "name": "realtime-service",
   "version": "1.0.0",
   "description": "backend for realtime voting and sessions",
-  "license": "ISC",
+  "license": "MIT",
   "author": "Project JRSY",
   "type": "module",
   "main": "server.js",
