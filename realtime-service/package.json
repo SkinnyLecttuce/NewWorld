@@ -4,7 +4,7 @@
   "description": "backend for realtime voting and sessions",
   "license": "MIT",
   "author": "Project JRSY",
-  "type": "commonjs",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
