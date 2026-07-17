@@ -3,7 +3,7 @@ class Member {
     constructor(socketId, userId, username) {
         this.socketId = socketId;
         this.userId = userId;
-        this.name = username;
+        this.username = username;
         this.joinedAt = Date.now();
     }
 }
